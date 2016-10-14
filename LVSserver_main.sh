@@ -123,6 +123,8 @@ echo "/usr/local/check_apache2.sh Configures OK"
 echo "service ipvsadm start">>/etc/rc.local
 echo "service apache2 start">>/etc/rc.local
 echo "service keepalived start">>/etc/rc.local
+chmod +x /etc/rc.local
+
 service ipvsadm restart
 service apache2 restart
 service keepalived restart
