@@ -81,7 +81,7 @@ Ubuntu16.04 配置 LVS+Keepalived 负载均衡
         
      在index.html文件中编辑并保存此Real Server的显示内容，为了区分不同Real Server，建议在配置不同Real Server时，编辑不同的内容， 如
      
-        <p>This is Real Server *</p>
+        &lt;p&gt;This is Real Server * &lt;/p&gt;
         
      其中 * 指的是Real Server编号。
      
