@@ -2,19 +2,28 @@
 Ubuntu16.04 配置 LVS+Keepalived 负载均衡
 
 一. 实验环境
+
   客户主机：Windows
   LVS Director1: Ubuntu16.04 (IP: 192.168.159.137), MASTER
+  
   LVS Director2: Ubuntu16.04 (IP: 192.168.159.136), BACKUP
+  
   Real Server1: Ubuntu16.04 (IP: 192.168.159.131)
+  
   Real Server2: Ubuntu16.04 (IP: 192.168.159.138)
+  
   VIP：192.168.159.130(虚拟IP，并不是一个真正的主机，而是在LVS Director和Real Server上都要配的IP）
+  
   实验中，在Real Server上配置了Apache2服务用来查看访问和负载均衡效果。
   
 二. 实验目的
+
   利用LVS DR模式实现负载均衡，利用keepalived对Director和Real-server保活，从而实现高可用。
   
 三. 原理
+
   LVS DR模式：客户机对VIP的请求先到LVS Director，LVS Director将请求包的目的MAC地址改成自己同一网段下的Real Server的MAC地址再转发出去。因为在每个Real Server上都配有VIP, 所以Real Server会认为这是对本机的请求，所以将应答包直接返回给客户机。
+  
   Keepalived: 在MASTER(LVS Director1)和Backup(LVS Director2)上分别配置keepalived, MASTER的优先级高于BACKUP的优先级，keepalived在局域网中选举出MASTER承担转发任务。当MASTER出现故障，keepalived通过监测和检查可以实时发现并将转发任务切换到BACKUP上。当MASTER修复并重新上线，因为MASTER的优先级高，则会立即抢占，仍由MASTER转发。
   
 四. 文件使用方法
