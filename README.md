@@ -4,6 +4,7 @@ Ubuntu16.04 配置 LVS+Keepalived 负载均衡
 一. 实验环境
 
   客户主机：Windows
+  
   LVS Director1: Ubuntu16.04 (IP: 192.168.159.137), MASTER
   
   LVS Director2: Ubuntu16.04 (IP: 192.168.159.136), BACKUP
