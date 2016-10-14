@@ -57,7 +57,7 @@ Ubuntu16.04 配置 LVS+Keepalived 负载均衡
 五. 测试
   1. 测试负载均衡
       在客户机上浏览器输入192.168.159.130，并访问；
-      使用 ctrl+F5 从服务器端刷新，可以看到，每次访问的是不同的Real Server上的index.html页面。
+      使用 ctrl+F5 从服务器端刷新，由于配置的是 rr 轮转算法且持续时间为0，可以看到，每次访问的是不同的Real Server上的index.html页面。
   
   2. 测试主备切换
      MASTER，BACKUP和两台Real Server都配置好了之后，在MASTER上执行命令
@@ -77,11 +77,12 @@ Ubuntu16.04 配置 LVS+Keepalived 负载均衡
      
   3. 测试Real Server down掉的情况
      在承担转发任务的Director上执行命令：
-        ipvsadm
+        ipvsadm -L -n
      查看此时的Real Server列表，如果某台 Real Server在列表中，Director会向它转发，反之则不会。
      关掉任何一台Real Server上的apache2服务，或者直接关机，此时在承担转发任务的Director上执行命令：
         ipvsadm -L -n
-     可以看到
+     可以看到down掉的Real Server从转发列表中删除了，此时再从客户机请求VIP, 即192.168.159.130，只能看到剩余的Real Server的响应页面。
+     重新恢复down掉的Real Server，则又在转发列表中看到 Real Server了，也能正常承担服务了。
   
   
   
